@@ -10,7 +10,7 @@ module.exports=(req,res,next)=>{
     console.log(req)
 
     if(!authorization){
-        res.status(401).json({error:"You must be logged in"})
+        res.status(401).json({error:"You must be logged in",errcode:"nl"})
     }
 
     const token = authorization.replace("Bearer ","")
