@@ -28,7 +28,7 @@ const Login =()=>{
                 console.log(data.message)
                 M.toast({html:"Login Succesful",className:""})
                 localStorage.setItem('token',data.token)
-                localStorage.setItem('user',data.user)
+                localStorage.setItem('user',JSON.stringify(data.user))
                 history.push("/home")
                 dispatch({type:"USER",payload:data.user})
             }

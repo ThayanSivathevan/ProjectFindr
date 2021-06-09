@@ -16,3 +16,12 @@
   border-radius: 2.5%;
   margin-top: 40px;
 }
+
+.profile-card{
+  padding: 20px;
+  text-align:center;
+  max-width: 500px;
+  margin: 10px auto;
+  border-radius: 2.5%;
+  margin-top: 10px;
+}

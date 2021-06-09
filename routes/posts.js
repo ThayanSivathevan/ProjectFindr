@@ -21,7 +21,9 @@ router.post("/createPost",requireLogin,(req,res)=>{
 
 router.get("/getPost/:id",requireLogin,(req,res)=>{
     const {id} = req.params
-    Posts.findById(id).then(savedPost=>{
+    console.log(id)
+    Posts.findById(id).populate("postOwner","firstName lastName").then(savedPost=>{
+        console.log(savedPost)
         if(savedPost)res.json({savedPost})
         else res.status(422).json({error:"Post does not exist"})
     }).catch(err=>{
@@ -79,4 +81,48 @@ router.delete("/deletePost/:id",requireLogin,(req,res)=>{
     })
 })
 
+
+router.get("/getUserPosts",requireLogin,(req,res)=>{
+    const {_id}=req.user
+
+    Posts.find({postOwner:_id}).then((posts)=>{
+        if(posts)res.json({posts})
+        else  res.status(422).json({error:"There was a unexpected problem"})
+    }).catch(err=>{
+        console.log(err)
+        res.status(422).json({error:"There was a unexpected problem"})
+    })
+})
+
+
+router.get("/getUserPosts/:id",requireLogin,(req,res)=>{
+    const {id}=req.params
+
+    Posts.find({postOwner:id}).then((posts)=>{
+        
+        if(posts){
+            res.json({posts})
+            console.log(posts)
+        }
+        else  res.status(422).json({error:"There was a unexpected problem"})
+    }).catch(err=>{
+        console.log(err)
+        res.status(422).json({error:"There was a unexpected problem"})
+    })
+})
+
+
+
+router.get("/getUserData/:id",requireLogin,(req,res)=>{
+    const {id}=req.params
+
+    User.findById(id).select("firstName lastName program").then((savedUser)=>{
+      
+        if(savedUser)res.json({savedUser})
+        else  res.status(422).json({error:"There was a unexpected problem"})
+    }).catch(err=>{
+        console.log(err)
+        res.status(422).json({error:"There was a unexpected problem"})
+    })
+})
 module.exports=router

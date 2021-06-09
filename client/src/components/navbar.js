@@ -31,6 +31,7 @@ const Navbar = () => {
             return [
                 <li><Link to="/home">Home</Link></li>,
                 <li><Link to="/search">Search</Link></li>,
+                <li><Link to="/profile">Profile</Link></li>,
                 <li>
                     <button className="btn navBtn blue darken-4" onClick={() => history.push("/createPost")}>
                         CreatePost
