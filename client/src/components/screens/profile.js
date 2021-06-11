@@ -4,7 +4,7 @@ import { Link, useHistory, useParams } from 'react-router-dom'
 import M from 'materialize-css'
 import { UserContext } from "../../App"
 
-
+import errorHandler from '../../utils/errorHandler'
 
 const UserProfile = () => {
     const [posts, setPosts] = useState([])
@@ -22,12 +22,7 @@ const UserProfile = () => {
                 "authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res=>res.json()).then(data=>{
-            if (data.error) {
-                if (data.errcode == "nl") {
-                    history.push("/login")
-                }
-                M.toast({ html: data.error, className: "" })
-            }
+            if(errorHandler(data,M,history))console.log(data.error)
             else{
                 setPosts(data.posts)
             }
@@ -43,19 +38,14 @@ const UserProfile = () => {
                 "authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res=>res.json()).then(data=>{
-            if (data.error) {
-                if (data.errcode == "nl") {
-                    history.push("/login")
-                }
-                M.toast({ html: data.error, className: "" })
-            }
+            if(errorHandler(data,M,history))console.log(data.error)
             else{
                getUserPosts()
             }
         })
     }
     return (
-        <div>
+        <div  className="backgroundHome">
             <div>
                 {state &&
                     <div className="profile-card ">
@@ -74,7 +64,7 @@ const UserProfile = () => {
 
 
             <div>
-                <h4 className="center ">Projects: </h4>
+                <h4 className="center white-text">Projects: </h4>
             </div>
 
 

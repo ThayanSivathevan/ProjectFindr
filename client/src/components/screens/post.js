@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import M from 'materialize-css'
 import { UserContext } from "../../App"
-
+import errorHandler from '../../utils/errorHandler'
 
 const Post = () => {
     const [post, setPost] = useState()
@@ -19,12 +19,7 @@ const Post = () => {
                 "authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res => res.json()).then(data => {
-            if (data.error) {
-                if (data.errcode == "nl") {
-                    history.push("/login")
-                }
-                M.toast({ html: data.error, className: "" })
-            }
+            if(errorHandler(data,M,history))console.log(data.error)
             else {
                 setPost(data.savedPost)
             }

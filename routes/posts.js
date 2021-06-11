@@ -125,4 +125,30 @@ router.get("/getUserData/:id",requireLogin,(req,res)=>{
         res.status(422).json({error:"There was a unexpected problem"})
     })
 })
+
+
+router.get("/getLastThreePosts",(req,res)=>{
+    Posts.find().sort("-dateCreated").limit(3).populate("postOwner","firstName lastName").then((savedPosts)=>{
+        console.log(savedPosts)
+        if(savedPosts)res.json({savedPosts})
+        else  res.status(422).json({error:"There was a unexpected problem"})
+    }).catch(err=>{
+        console.log(err)
+        res.status(422).json({error:"There was a unexpected problem"})
+    })
+})
+
+router.post("/searchPosts",(req,res)=>{
+    console.log(req.body.query)
+    const {query} = req.body
+    let reg= new RegExp("^"+query.toLowerCase(),"i")
+    Posts.find({projectName:{$regex:reg}}).sort('-dateCreated').populate("postOwner","firstName lastName").then((savedPosts)=>{
+        console.log(savedPosts)
+        if(savedPosts)res.json({savedPosts})
+        else  res.status(422).json({error:"There was a unexpected problem"})
+    }).catch(err=>{
+        console.log(err)
+        res.status(422).json({error:"There was a unexpected problem"})
+    })
+})
 module.exports=router

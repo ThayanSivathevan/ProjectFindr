@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import M from 'materialize-css'
 
-
+import errorHandler from '../../utils/errorHandler'
 
 
 const CreatePost =()=>{
@@ -33,12 +33,7 @@ const CreatePost =()=>{
                 difficulty
             })
         }).then(res=>res.json()).then(data=>{
-            if(data.error){
-                if(data.errcode=="nl"){
-                    history.push("/login")
-                }
-                M.toast({html:data.error,className:""})
-            }
+            if(errorHandler(data,M,history))console.log(data.error)
             else{
                 M.toast({html:"Post was successfully created",className:""})
                 history.push("/post/"+data._id)

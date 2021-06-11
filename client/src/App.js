@@ -10,6 +10,10 @@ import Post from "./components/screens/post"
 import UserProfile from "./components/screens/profile"
 import EditPost from './components/screens/edit';
 import ShowProfile from './components/screens/showProfile';
+import Home from './components/screens/home'
+import Search from './components/screens/search';
+import ResetPassword from './components/screens/resetPassword';
+import Newpassword from './components/screens/newPassword'
 export const UserContext= createContext()
 const Routing = () => {
   const history = useHistory()
@@ -48,6 +52,18 @@ const Routing = () => {
       <Route exact path="/profile/:id">
         <ShowProfile/>
       </Route>  
+      <Route path="/home">
+          <Home />
+      </Route>
+      <Route path="/search">
+        <Search />
+      </Route>
+      <Route exact path="/resetPassword">
+        <ResetPassword />
+      </Route>
+      <Route exact path="/resetPassword/:token">
+          <Newpassword />
+      </Route>
     </Switch>
   )
 }

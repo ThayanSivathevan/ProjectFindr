@@ -22,6 +22,10 @@ const postSchema=new mongoose.Schema({
     postOwner:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"USER"
+    },
+    dateCreated:{
+        type:Date,
+        default:Date.now
     }
 })
 

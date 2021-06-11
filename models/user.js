@@ -22,7 +22,9 @@ const userSchema =new mongoose.Schema({
     },
     program:{
         type:String
-    }
+    },
+    resetToken:String,
+    expiration:Date
 
 })
 

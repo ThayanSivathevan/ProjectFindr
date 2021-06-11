@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import M from 'materialize-css'
 import { UserContext } from "../../App"
-
+import errorHandler from '../../utils/errorHandler'
 
 
 const ShowProfile = () => {
@@ -25,12 +25,7 @@ const ShowProfile = () => {
                 "authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res=>res.json()).then(data=>{
-            if (data.error) {
-                if (data.errcode == "nl") {
-                    history.push("/login")
-                }
-                M.toast({ html: data.error, className: "" })
-            }
+            if(errorHandler(data,M,history))console.log(data.error)
             else{
                 console.log(posts)
                 setPosts(data.posts)
@@ -45,12 +40,7 @@ const ShowProfile = () => {
                 "authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then(res=>res.json()).then(data=>{
-            if (data.error) {
-                if (data.errcode == "nl") {
-                    history.push("/login")
-                }
-                M.toast({ html: data.error, className: "" })
-            }
+            if(errorHandler(data,M,history))console.log(data.error)
             else{
                 console.log(data.savedUser)
                 setUser(data.savedUser)
@@ -59,7 +49,7 @@ const ShowProfile = () => {
     }
   
     return (
-        <div>
+        <div className="backgroundHome">
             <div>
                 {user &&
                     <div className="profile-card ">
@@ -78,7 +68,7 @@ const ShowProfile = () => {
 
 
             <div>
-                <h4 className="center ">Projects: </h4>
+                <h4 className="center white-text">Projects: </h4>
             </div>
 
 
